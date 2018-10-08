@@ -1,6 +1,7 @@
 package chatapp.beast.firebasechat;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -25,8 +26,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ContactFragment extends Fragment {
 
-private RecyclerView contact_recyler;
-private DatabaseReference databaseReference;
+    private RecyclerView contact_recyler;
+    private DatabaseReference databaseReference;
+
     public ContactFragment() {
         // Required empty public constructor
     }
@@ -37,41 +39,49 @@ private DatabaseReference databaseReference;
                              Bundle savedInstanceState) {
 
 
-        View view= inflater.inflate(R.layout.fragment_contact, container, false);
+        View view = inflater.inflate(R.layout.fragment_contact, container, false);
 
-        contact_recyler=(RecyclerView)view.findViewById(R.id.recycler_contacts);
+        contact_recyler = (RecyclerView) view.findViewById(R.id.recycler_contacts);
         contact_recyler.setHasFixedSize(true);
         contact_recyler.setLayoutManager(new LinearLayoutManager(getContext()));
 
-databaseReference=FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-return  view;
+        return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Query query=databaseReference.child("Users");
+        Query query = databaseReference.child("Users");
         FirebaseRecyclerOptions<Contacts> options =
                 new FirebaseRecyclerOptions.Builder<Contacts>()
                         .setQuery(query, Contacts.class)
                         .build();
-        FirebaseRecyclerAdapter<Contacts,ContactsViewHolder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Contacts, ContactsViewHolder>
+        FirebaseRecyclerAdapter<Contacts, ContactsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Contacts, ContactsViewHolder>
 
-                (   options) {
+                (options) {
             @Override
-            protected void onBindViewHolder(@NonNull ContactsViewHolder holder, int position, @NonNull Contacts model) {
-holder.setUser_name(model.getUser_name());
-holder.setUser_image(model.getUser_thumb_image());
-holder.setUser_status(model.getUser_status());
-                Log.d("RECYCLERVIEW","ONBINDVIEW CALLED full");
+            protected void onBindViewHolder(@NonNull ContactsViewHolder holder, final int position, @NonNull Contacts model) {
+                holder.setUser_name(model.getUser_name());
+                holder.setUser_image(model.getUser_thumb_image());
+                holder.setUser_status(model.getUser_status());
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String chat_to_user_id=getRef(position).getKey();
+                        Intent chat_intent=new Intent(getContext(),ChatActivity.class);
+                        chat_intent.putExtra("chat_to_user_id",chat_to_user_id);
+                        startActivity(chat_intent);
+                    }
+                });
             }
 
             @NonNull
             @Override
             public ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
                 View view = LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.contact_users_layout,viewGroup, false);
+                        .inflate(R.layout.contact_users_layout, viewGroup, false);
 
                 return new ContactsViewHolder(view);
             }
@@ -81,38 +91,35 @@ holder.setUser_status(model.getUser_status());
 
     }
 
-    public  static  class ContactsViewHolder extends RecyclerView.ViewHolder
-    {View mView;
+    public static class ContactsViewHolder extends RecyclerView.ViewHolder {
+        View mView;
 
         public ContactsViewHolder(@NonNull View itemView) {
             super(itemView);
-        mView=itemView;
+            mView = itemView;
         }
 
 
-
-        public void setUser_name(String user_name)
-        {
-            TextView name=mView.findViewById(R.id.contacts_fragment_user_name);
+        public void setUser_name(String user_name) {
+            TextView name = mView.findViewById(R.id.contacts_fragment_user_name);
             name.setText(user_name);
         }
 
 
-        public void setUser_status(String user_status)
-        {
-TextView status=mView.findViewById(R.id.contacts_fragment_user_status);
-        status.setText(user_status);
+        public void setUser_status(String user_status) {
+            TextView status = mView.findViewById(R.id.contacts_fragment_user_status);
+            status.setText(user_status);
         }
 
 
-        public void setUser_image(String user_thumb_image)
-        {CircleImageView imageView=mView.findViewById(R.id.contacts_thumb_profile_pic);
-           if (!user_thumb_image.equals("default_image"))
-            Picasso.get().load(user_thumb_image).into(imageView);
-            else
-           {Picasso.get().load(R.drawable.default_profile_pic).into(imageView);
+        public void setUser_image(String user_thumb_image) {
+            CircleImageView imageView = mView.findViewById(R.id.contacts_thumb_profile_pic);
+            if (!user_thumb_image.equals("default_image"))
+                Picasso.get().load(user_thumb_image).into(imageView);
+            else {
+                Picasso.get().load(R.drawable.default_profile_pic).into(imageView);
 
-           }
+            }
         }
     }
 }

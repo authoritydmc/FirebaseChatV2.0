@@ -43,10 +43,12 @@ import java.util.Set;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
+import static chatapp.beast.firebasechat.CONSTANTS.change_profile_request_code;
+import static chatapp.beast.firebasechat.CONSTANTS.gallery_pick;
+
 
 public class SettingActivity extends AppCompatActivity {
-    private static int gallery_pick = 1;
-    private static int change_profile_request_code = 2;
+
     private DatabaseReference dbReference;
     private Toolbar toolbar;
     private TextView username, userstatus;
@@ -101,15 +103,15 @@ public class SettingActivity extends AppCompatActivity {
                 Intent galleryintent = new Intent();
                 galleryintent.setAction(Intent.ACTION_GET_CONTENT);
                 galleryintent.setType("image/*");
-                startActivityForResult(galleryintent, gallery_pick);
+                startActivityForResult(galleryintent,gallery_pick);
             }
         });
         change_sts_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingActivity.this, Change_profile.class);
-                intent.putExtra("old_username", user_name);
-                intent.putExtra("old_user_status", user_status);
+                intent.putExtra(CONSTANTS.OLD_USER_NAME, user_name);
+                intent.putExtra(CONSTANTS.OLD_USER_STATUS, user_status);
                 startActivityForResult(intent, change_profile_request_code);
             }
         });
@@ -127,8 +129,8 @@ public class SettingActivity extends AppCompatActivity {
         }
         if (requestCode == change_profile_request_code && resultCode == RESULT_OK) {
 
-            String new_username = data.getStringExtra("new_username");
-            String new_usersts = data.getStringExtra("old_user_sts");
+            String new_username = data.getStringExtra(CONSTANTS.NEW_USER_NAME);
+            String new_usersts = data.getStringExtra(CONSTANTS.NEW_USER_STATUS);
             dbReference.child("user_name").setValue(new_username);
             dbReference.child("user_status").setValue(new_usersts).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override

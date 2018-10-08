@@ -33,7 +33,9 @@
         <activity
             android:name=".SettingActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".Change_profile"></activity>
+        <activity android:name=".Change_profile" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ChatActivity"></activity>
     </application>
 
 </manifest>

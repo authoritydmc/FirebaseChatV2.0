@@ -19,8 +19,8 @@ private Button btn_save_change;
         user_name=findViewById(R.id.new_user_name);
         user_sts=findViewById(R.id.new_user_status);
         btn_save_change=findViewById(R.id.btn_save_profile_change);
-        String old_name=getIntent().getStringExtra("old_username");
-        String old_sts=getIntent().getStringExtra("old_user_status");
+        String old_name=getIntent().getStringExtra(CONSTANTS.OLD_USER_NAME);
+        String old_sts=getIntent().getStringExtra(CONSTANTS.OLD_USER_STATUS);
         user_name.setText(old_name);
         user_sts.setText(old_sts);
 
@@ -41,8 +41,8 @@ return;
                     return;
                 }
                 Intent resultIntent=new Intent();
-                resultIntent.putExtra("new_username",new_username);
-                resultIntent.putExtra("old_user_sts",new_usersts);
+                resultIntent.putExtra(CONSTANTS.NEW_USER_NAME,new_username);
+                resultIntent.putExtra(CONSTANTS.NEW_USER_STATUS,new_usersts);
                 setResult(Activity.RESULT_OK,resultIntent);
                 finish();
 
