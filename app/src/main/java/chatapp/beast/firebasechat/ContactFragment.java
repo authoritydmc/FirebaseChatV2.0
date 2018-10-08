@@ -7,12 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -41,7 +39,7 @@ public class ContactFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
 
-        contact_recyler = (RecyclerView) view.findViewById(R.id.recycler_contacts);
+        contact_recyler = view.findViewById(R.id.recycler_contacts);
         contact_recyler.setHasFixedSize(true);
         contact_recyler.setLayoutManager(new LinearLayoutManager(getContext()));
 

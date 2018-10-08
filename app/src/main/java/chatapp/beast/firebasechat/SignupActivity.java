@@ -1,9 +1,9 @@
 package chatapp.beast.firebasechat;
 
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +15,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class signup extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
     private FirebaseAuth mAuth;
@@ -66,7 +65,7 @@ public class signup extends AppCompatActivity {
 
         _signupButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(signup.this,
+        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
@@ -95,7 +94,7 @@ public class signup extends AppCompatActivity {
                                    if (task.isSuccessful())
                                    {
                                        progressDialog.dismiss();
-                                       onSignupSuccess();;
+                                       onSignupSuccess();
                                    }else onSignupFailed();
                                }
                            });
@@ -118,7 +117,7 @@ public class signup extends AppCompatActivity {
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
-        Toast.makeText(signup.this,"Successfully Created Account",Toast.LENGTH_SHORT).show();
+        Toast.makeText(SignupActivity.this, "Successfully Created Account", Toast.LENGTH_SHORT).show();
         finish();
     }
 

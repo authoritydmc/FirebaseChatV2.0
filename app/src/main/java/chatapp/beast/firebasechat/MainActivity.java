@@ -1,16 +1,13 @@
 package chatapp.beast.firebasechat;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,13 +24,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_main);
-        viewPager = (ViewPager) findViewById(R.id.main_tabs_pager);
+        viewPager = findViewById(R.id.main_tabs_pager);
         tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(tabPagerAdapter);
-        tabLayout = (TabLayout) findViewById(R.id.main_tabs);
+        tabLayout = findViewById(R.id.main_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar_main);
+        toolbar = findViewById(R.id.app_bar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("FireChat");
 
