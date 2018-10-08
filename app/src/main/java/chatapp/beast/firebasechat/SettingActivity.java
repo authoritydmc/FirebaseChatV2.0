@@ -35,10 +35,13 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import id.zelory.compressor.Compressor;
 
 
 public class SettingActivity extends AppCompatActivity {
@@ -49,7 +52,7 @@ public class SettingActivity extends AppCompatActivity {
     private TextView username, userstatus;
     private CircleImageView user_profile_pic;
     private CircleImageView btn_change_profile_pic;
-    private StorageReference storageReference;
+    private StorageReference storageReference,thumb_image_reference;
     private ProgressDialog progressBar;
     private ImageButton change_sts_btn;
     private String user_name, user_status;
@@ -67,7 +70,7 @@ public class SettingActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         dbReference = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         storageReference = FirebaseStorage.getInstance().getReference().child("profile_images ");
-
+        thumb_image_reference=FirebaseStorage.getInstance().getReference().child("thumb_images");
         user_profile_pic = (CircleImageView) findViewById(R.id.settings_profile_pic);
         username = findViewById(R.id.settings_username);
         userstatus = findViewById(R.id.settings_status);
@@ -141,28 +144,69 @@ public class SettingActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 progressBar.setIndeterminate(true);
-                progressBar.setMessage("Updating Your Profile pciture");
+                progressBar.setMessage("Updating Your Profile picture");
                 progressBar.show();
                 Uri resulturi = result.getUri();
 
-                File thumb_filepath = new File(resulturi.getPath());
+                File thumb_filepathURi = new File(resulturi.getPath());
+                try
+                {
+                    thumb_bitmap=new Compressor(this).setMaxHeight(200)
+                            .setMaxWidth(200).setQuality(50).compressToBitmap(thumb_filepathURi);
+                }catch (IOException r)
+                {
+                    r.printStackTrace();
+                }
+                ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+                thumb_bitmap.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
+                final byte[] thumbByte=byteArrayOutputStream.toByteArray();
 
                 final String FileUrl = FirebaseAuth.getInstance().getCurrentUser().getUid() + ".jpg";
 
                 final StorageReference filepath = storageReference.child(FileUrl);
+                final StorageReference thumb_filepath=thumb_image_reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()+".jpg");
 
                 filepath.putFile(resulturi).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                         filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                Uri downloaduri = uri;
-                                dbReference.child("user_image").setValue(downloaduri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+
+
+                                dbReference.child("user_image").setValue(uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        progressBar.dismiss();
-                                        Toast.makeText(SettingActivity.this, "Profile Picture updated ", Toast.LENGTH_SHORT).show();
+
+                                 thumb_filepath.putBytes(thumbByte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                     @Override
+                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    thumb_filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                       dbReference.child("user_thumb_image").setValue(uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                           @Override
+                                           public void onSuccess(Void aVoid) {
+
+                                               ///uploaded Profile pic alongwith thumb pic
+                                               SuccessProfileUpdated();
+                                           }
+                                       })     ;
+                                        }
+                                    });
+
+
+                                     }
+                                 });
+
+
+
+
+
+
+
                                     }
                                 });
                             }
@@ -176,6 +220,10 @@ public class SettingActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    private void SuccessProfileUpdated() { progressBar.dismiss();
+        Toast.makeText(SettingActivity.this, "Profile Picture updated ", Toast.LENGTH_SHORT).show();
     }
 
 

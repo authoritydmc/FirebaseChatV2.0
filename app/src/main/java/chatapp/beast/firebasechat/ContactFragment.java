@@ -62,7 +62,7 @@ return  view;
             @Override
             protected void onBindViewHolder(@NonNull ContactsViewHolder holder, int position, @NonNull Contacts model) {
 holder.setUser_name(model.getUser_name());
-holder.setUser_image(model.getUser_image());
+holder.setUser_image(model.getUser_thumb_image());
 holder.setUser_status(model.getUser_status());
                 Log.d("RECYCLERVIEW","ONBINDVIEW CALLED full");
             }
@@ -105,10 +105,14 @@ TextView status=mView.findViewById(R.id.contacts_fragment_user_status);
         }
 
 
-        public void setUser_image(String user_image)
+        public void setUser_image(String user_thumb_image)
         {CircleImageView imageView=mView.findViewById(R.id.contacts_thumb_profile_pic);
-            Picasso.get().load(user_image).into(imageView);
+           if (!user_thumb_image.equals("default_image"))
+            Picasso.get().load(user_thumb_image).into(imageView);
+            else
+           {Picasso.get().load(R.drawable.default_profile_pic).into(imageView);
 
+           }
         }
     }
 }
