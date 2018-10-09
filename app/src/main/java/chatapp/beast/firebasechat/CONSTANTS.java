@@ -8,4 +8,12 @@ public class CONSTANTS {
     public static int gallery_pick = 1;
     public static int change_profile_request_code = 2;
     public static String CHAT_TO_USER_ID = "chat_to_user_id";
+    public static String CHAT_TO_USER_NAME = "chat_to_user_name";
+    public static String CHAT_TO_USER_DP = "chat_to_user_dp";
+    public static String DATABASE_USER_nodE = "Users";
+    public static String DATABASE_USER_image = "user_image";
+    public static String DATABASE_USER_thumb_image = "user_thumb_image";
+    public static String DATABASE_USER_name = "user_name";
+    public static String DATABASE_USER_status = "user_status";
+
 }

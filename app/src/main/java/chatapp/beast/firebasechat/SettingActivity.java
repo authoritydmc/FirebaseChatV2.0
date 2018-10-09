@@ -63,7 +63,7 @@ public class SettingActivity extends AppCompatActivity {
         progressBar = new ProgressDialog(this, R.style.AppTheme_Dark_Dialog);
 
         getSupportActionBar().setTitle("Settings");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         dbReference = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         storageReference = FirebaseStorage.getInstance().getReference().child("profile_images ");
         thumb_image_reference=FirebaseStorage.getInstance().getReference().child("thumb_images");
@@ -240,6 +240,8 @@ public class SettingActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
+
+
         }
         return true;
     }

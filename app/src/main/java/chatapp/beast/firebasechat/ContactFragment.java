@@ -17,6 +17,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,7 +46,7 @@ public class ContactFragment extends Fragment {
         contact_recyler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
+        databaseReference.keepSynced(true);
         return view;
     }
 
@@ -60,16 +62,20 @@ public class ContactFragment extends Fragment {
 
                 (options) {
             @Override
-            protected void onBindViewHolder(@NonNull ContactsViewHolder holder, final int position, @NonNull Contacts model) {
+            protected void onBindViewHolder(@NonNull ContactsViewHolder holder, final int position, @NonNull final Contacts model) {
                 holder.setUser_name(model.getUser_name());
                 holder.setUser_image(model.getUser_thumb_image());
                 holder.setUser_status(model.getUser_status());
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         String chat_to_user_id=getRef(position).getKey();
+                        String chat_to_user_name = model.getUser_name();
                         Intent chat_intent=new Intent(getContext(),ChatActivity.class);
                         chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_ID, chat_to_user_id);
+                        chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_NAME, chat_to_user_name);
+                        chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_DP, model.getUser_thumb_image());
                         startActivity(chat_intent);
                     }
                 });
@@ -111,11 +117,21 @@ public class ContactFragment extends Fragment {
 
 
         public void setUser_image(String user_thumb_image) {
-            CircleImageView imageView = mView.findViewById(R.id.contacts_thumb_profile_pic);
+            final CircleImageView imageView = mView.findViewById(R.id.contacts_thumb_profile_pic);
             if (!user_thumb_image.equals("default_image"))
                 Picasso.get().load(user_thumb_image).into(imageView);
             else {
-                Picasso.get().load(R.drawable.default_profile_pic).into(imageView);
+                Picasso.get().load(R.drawable.default_profile_pic).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.default_profile_pic).into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Picasso.get().load(R.drawable.default_profile_pic).placeholder(R.drawable.default_profile_pic).into(imageView);
+                    }
+                });
 
             }
         }
