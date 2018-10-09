@@ -69,7 +69,7 @@ public class ContactFragment extends Fragment {
                     public void onClick(View v) {
                         String chat_to_user_id=getRef(position).getKey();
                         Intent chat_intent=new Intent(getContext(),ChatActivity.class);
-                        chat_intent.putExtra("chat_to_user_id",chat_to_user_id);
+                        chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_ID, chat_to_user_id);
                         startActivity(chat_intent);
                     }
                 });

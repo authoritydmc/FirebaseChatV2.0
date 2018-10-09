@@ -10,6 +10,6 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        Toast.makeText(this, getIntent().getStringExtra("chat_to_user_id"), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getIntent().getStringExtra(CONSTANTS.CHAT_TO_USER_ID), Toast.LENGTH_LONG).show();
     }
 }

@@ -23,6 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+                                                <entry key="scalingPercent" value="69" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -34,8 +35,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="a597be" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/23937664d96586c4a88e2618f86ad5c0.png" />
+                                      <entry key="backgroundColor" value="be1d3b" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/AndroidPacks/icon.png" />
                                     </map>
                                   </option>
                                 </PersistentState>

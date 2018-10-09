@@ -7,4 +7,5 @@ public class CONSTANTS {
     public  static  String OLD_USER_STATUS="old_user_status";
     public static int gallery_pick = 1;
     public static int change_profile_request_code = 2;
+    public static String CHAT_TO_USER_ID = "chat_to_user_id";
 }
