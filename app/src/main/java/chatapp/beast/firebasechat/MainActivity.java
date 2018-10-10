@@ -27,11 +27,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 
-
 public class MainActivity extends AppCompatActivity {
+    private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -103,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(CONSTANTS.DATABASE_USER_nodE).child(mAuth.getCurrentUser().getUid());
+
         setContentView(R.layout.activity_main);
         viewPager = findViewById(R.id.main_tabs_pager);
         tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
@@ -114,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("FireChat");
 
+        databaseReference.child("online").setValue("online");
+
 
     }
 
@@ -124,23 +129,23 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             goto_login_page();
-        }
-        DatabaseReference dbreference = FirebaseDatabase.getInstance().getReference().child(CONSTANTS.DATABASE_USER_nodE).child(mAuth.getCurrentUser().getUid());
-        dbreference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //USERS EXISTS NO NEED TO LOGOUT
-                if (!dataSnapshot.exists()) {
-                    mAuth.signOut();
+        } else {
+
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    //USERS EXISTS NO NEED TO LOGOUT
+                    if (!dataSnapshot.exists()) {
+                        mAuth.signOut();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("DBERROR", "error in dbrefernce main activity on start ");
-            }
-        });
-
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.d("DBERROR", "error in dbrefernce main activity on start ");
+                }
+            });
+        }
     }
 
     private void goto_login_page() {
@@ -153,12 +158,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        databaseReference.child("online").setValue("online");
+
         registerInternetCheckReceiver();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        databaseReference.child("online").setValue(ServerValue.TIMESTAMP);
         unregisterReceiver(broadcastReceiver);
     }
 
@@ -172,25 +180,19 @@ public class MainActivity extends AppCompatActivity {
     private void setSnackbarMessage(String status, boolean showBar) {
         String internetStatus = "";
         if (status.equalsIgnoreCase("Wifi enabled") || status.equalsIgnoreCase("Mobile data enabled")) {
-            internetStatus = "Internet Connected";
+            internetStatus = "woah  !!!  we are back online";
         } else {
-            internetStatus = "Lost Internet Connection";
+            internetStatus = "Uh-huh Connection lost";
         }
         snackbar = Snackbar
-                .make(coordinatorLayout, internetStatus, Snackbar.LENGTH_LONG)
-                .setAction("X", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snackbar.dismiss();
-                    }
-                });
+                .make(coordinatorLayout, internetStatus, Snackbar.LENGTH_LONG);
         // Changing message text color
         snackbar.setActionTextColor(Color.WHITE);
         // Changing action button text color
         View sbView = snackbar.getView();
         TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
-        if (internetStatus.equalsIgnoreCase("Lost Internet Connection")) {
+        if (internetStatus.equalsIgnoreCase("woah  !!!  we are back online")) {
             if (internetConnected) {
                 snackbar.show();
                 internetConnected = false;
@@ -202,6 +204,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseReference.child("online").setValue(ServerValue.TIMESTAMP);
 
     }
 }

@@ -3,6 +3,7 @@ package chatapp.beast.firebasechat;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,11 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -86,7 +89,12 @@ public class SignupActivity extends AppCompatActivity {
 
                            myFirebaseDatareference=FirebaseDatabase.getInstance().getReference().child("Users").child(user_uid);
                             myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_name).setValue(name);
-                            MyFirebaseInstanceIdService.update_device_token();
+                            myFirebaseDatareference.child(CONSTANTS.DEVICE_TOKEN).setValue(FirebaseInstanceId.getInstance().getToken()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Snackbar.make(getWindow().getDecorView().getRootView(), "device token uploaded", Snackbar.LENGTH_SHORT).show();
+                                }
+                            });
                             myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_image).setValue("https://firebasestorage.googleapis.com/v0/b/fir-1af64.appspot.com/o/profile_images%20%2Fdefault_profile_pic.png?alt=media&token=95159071-a9f2-4f3f-8121-00f8dd0c5733");
                             myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_thumb_image).setValue("default_image");
                             myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_status).setValue("I am using Raj's FireChat!!!").addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -118,6 +126,12 @@ public class SignupActivity extends AppCompatActivity {
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
+        mAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(SignupActivity.this, "Verification mail sent...", Toast.LENGTH_SHORT).show();
+            }
+        });
         Toast.makeText(SignupActivity.this, "Successfully Created Account", Toast.LENGTH_SHORT).show();
         finish();
     }
