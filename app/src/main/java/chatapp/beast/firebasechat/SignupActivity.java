@@ -85,10 +85,11 @@ public class SignupActivity extends AppCompatActivity {
                            String user_uid=mAuth.getCurrentUser().getUid();
 
                            myFirebaseDatareference=FirebaseDatabase.getInstance().getReference().child("Users").child(user_uid);
-                           myFirebaseDatareference.child("user_name").setValue(name);
-                           myFirebaseDatareference.child("user_image").setValue("https://firebasestorage.googleapis.com/v0/b/fir-1af64.appspot.com/o/profile_images%20%2Fdefault_profile_pic.png?alt=media&token=95159071-a9f2-4f3f-8121-00f8dd0c5733");
-                           myFirebaseDatareference.child("user_thumb_image").setValue("default_image");
-                           myFirebaseDatareference.child("user_status").setValue("I am using Raj's FireChat!!!").addOnCompleteListener(new OnCompleteListener<Void>() {
+                            myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_name).setValue(name);
+                            MyFirebaseInstanceIdService.update_device_token();
+                            myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_image).setValue("https://firebasestorage.googleapis.com/v0/b/fir-1af64.appspot.com/o/profile_images%20%2Fdefault_profile_pic.png?alt=media&token=95159071-a9f2-4f3f-8121-00f8dd0c5733");
+                            myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_thumb_image).setValue("default_image");
+                            myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_status).setValue("I am using Raj's FireChat!!!").addOnCompleteListener(new OnCompleteListener<Void>() {
                                @Override
                                public void onComplete(@NonNull Task<Void> task) {
                                    if (task.isSuccessful())

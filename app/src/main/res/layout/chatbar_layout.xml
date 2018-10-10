@@ -5,16 +5,28 @@
 
     >
 
+    <ImageButton
+        android:id="@+id/chat_activity_back"
+        android:layout_width="53dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="-111dp"
+        android:layout_toEndOf="@+id/chat_activity_profile_pic"
+        android:background="@android:color/transparent"
+        android:foregroundGravity="center_horizontal"
+        android:src="@drawable/ic_back" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chat_activity_profile_pic"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="-3dp"
+
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="51dp"
+
+        android:layout_marginTop="0dp"
         android:paddingTop="3dp"
         android:paddingBottom="5dp"
-        android:src="@drawable/default_profile_pic"
-
-        />
+        android:src="@drawable/default_profile_pic" />
 
     <TextView
         android:id="@+id/chat_activity_profile_name"
@@ -23,8 +35,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="75dp"
-        android:layout_marginLeft="45dp"
+        android:layout_marginStart="127dp"
+        android:layout_marginLeft="127dp"
         android:layout_marginTop="6dp"
         android:text="@string/Username"
         android:textSize="18sp"
@@ -37,8 +49,8 @@
         android:layout_alignBottom="@+id/chat_activity_profile_pic"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="75dp"
-        android:layout_marginLeft="75dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginBottom="2dp"
         android:text="Last Seen" />
 </RelativeLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_chat_show_profile"
+        android:title="Show Profile"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_chat_send_kick"
+        android:title="Send Kick"
+        app:showAsAction="never" />
+
+</menu>

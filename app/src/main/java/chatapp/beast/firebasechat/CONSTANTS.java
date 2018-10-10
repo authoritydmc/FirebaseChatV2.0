@@ -15,5 +15,6 @@ public class CONSTANTS {
     public static String DATABASE_USER_thumb_image = "user_thumb_image";
     public static String DATABASE_USER_name = "user_name";
     public static String DATABASE_USER_status = "user_status";
+    public static String DEVICE_TOKEN = "device_token";
 
 }
