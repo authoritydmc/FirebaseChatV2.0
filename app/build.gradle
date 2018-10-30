@@ -5,10 +5,10 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "chatapp.beast.firebasechat"
-        minSdkVersion 22
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-
+    implementation 'com.manolovn:trianglify:1.1.0'
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
+
 }

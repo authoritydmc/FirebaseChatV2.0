@@ -6,4 +6,6 @@
     <string name="Username">USERNAME:</string>
     <string name="Status">Status:</string>
     <string name="default_notification_channel">FIRECHAT</string>
+    <string name="notifications_admin_channel_name">FireChatNotify</string>
+    <string name="notifications_admin_channel_description">Notify Channel for Firechat</string>
 </resources>

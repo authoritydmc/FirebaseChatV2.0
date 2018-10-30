@@ -1,5 +1,9 @@
 package chatapp.beast.firebasechat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class CONSTANTS {
     public static String NEW_USER_STATUS="new_user_status";
     public static String NEW_USER_NAME="new_user_name";
@@ -17,5 +21,6 @@ public class CONSTANTS {
     public static String DATABASE_USER_status = "user_status";
     public static String DEVICE_TOKEN = "device_token";
     public static String MESSAGE_NODE = "Messages";
+    public  static DatabaseReference DatabaseReferenceToCurrentUser=    FirebaseDatabase.getInstance().getReference().child(CONSTANTS.DATABASE_USER_nodE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 }

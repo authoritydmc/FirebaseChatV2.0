@@ -17,12 +17,16 @@ public class Contacts {
         this.user_thumb_image = user_thumb_image;
     }
 
+
+
     public Contacts(String user_name, String user_status, String user_image, String user_thumb_image) {
 
         this.user_name = user_name;
         this.user_status = user_status;
         this.user_image = user_image;
         this.user_thumb_image=user_thumb_image;
+
+
 
     }
 

@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static boolean isAppRunning;
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private ViewPager viewPager;
@@ -102,9 +103,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isAppRunning=true;
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(CONSTANTS.DATABASE_USER_nodE).child(mAuth.getCurrentUser().getUid());
+        if (mAuth.getCurrentUser()!=null)
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(CONSTANTS.DATABASE_USER_nodE).child(mAuth.getCurrentUser().getUid());
+else goto_login_page();
 
         setContentView(R.layout.activity_main);
         viewPager = findViewById(R.id.main_tabs_pager);
@@ -117,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("FireChat");
 
-        databaseReference.child("online").setValue("online");
+      if (mAuth.getCurrentUser()!=null)
+          databaseReference.child("online").setValue("online");
 
 
     }
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         if (currentUser == null) {
             goto_login_page();
         } else {
-
+            databaseReference.child("online").setValue("online");
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -210,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isAppRunning=false;if (mAuth.getCurrentUser()!=null)
         databaseReference.child("online").setValue(ServerValue.TIMESTAMP);
 
     }

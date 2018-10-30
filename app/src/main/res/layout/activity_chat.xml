@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/gradient"
+    android:background="@drawable/chat_bg"
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
 
@@ -10,22 +10,28 @@
         android:id="@+id/chat_bar"
         layout="@layout/app_bar_layout" />
 
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/chat_bar">
+        android:id="@+id/Recycler_chat_msg"
+        android:layout_below="@id/chat_bar"
+        android:layout_above="@id/chat_combo">
+
 
     </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
+        android:id="@+id/chat_combo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/shape_message_area"
         android:gravity="bottom"
         android:orientation="horizontal">
 
@@ -41,9 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            android:hint="Enter Your Message here"
             android:textColor="@color/primaryTextColor"
-            android:textColorHint="@color/primaryColor"
-            android:hint="Enter Your Message here" />
+            android:textColorHint="@color/primaryColor" />
 
         <ImageButton
             android:id="@+id/chat_activity_send_message"
