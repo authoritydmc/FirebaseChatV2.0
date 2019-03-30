@@ -71,7 +71,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:textColor="@color/secondaryColor"
+            android:textColor="#fef6e7"
             android:text="Login"/>
 
         <TextView

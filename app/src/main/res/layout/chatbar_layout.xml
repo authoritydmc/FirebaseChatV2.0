@@ -29,6 +29,7 @@
         android:src="@drawable/default_profile_pic" />
 
     <TextView
+        android:textColor="#fef6e7"
         android:id="@+id/chat_activity_profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:textColor="#fef6e7"
         android:id="@+id/chat_activity_profile_lastseen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

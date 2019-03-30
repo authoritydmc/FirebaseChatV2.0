@@ -22,7 +22,7 @@ android:orientation="vertical"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="@dimen/card_radius">
 
-        <LinearLayout
+        <LinearLayout android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -42,7 +42,7 @@ android:orientation="vertical"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:text="UserName"
-                    android:textColor="@color/primaryTextColor"
+                    android:textColor="#fef6e7"
                     android:id="@+id/contacts_fragment_user_name"
                     android:textStyle="bold"/>
 
@@ -50,7 +50,7 @@ android:orientation="vertical"
                     android:id="@+id/contacts_fragment_user_status"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
-                    android:textColor="@color/primaryTextColor"
+                    android:textColor="#fef6e7"
                     android:layout_marginTop="5dp"
                     android:text="User's Status" />
 
