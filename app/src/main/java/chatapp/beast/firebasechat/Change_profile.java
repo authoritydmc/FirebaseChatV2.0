@@ -41,6 +41,10 @@ return;
                     return;
                 }
                 Intent resultIntent=new Intent();
+                new_username=new_username.trim();
+               new_username= new_username.replaceAll("\n"," ");
+               new_username=new_username.replaceAll("[ ]+"," ");
+                new_usersts=new_usersts.trim();
                 resultIntent.putExtra(CONSTANTS.NEW_USER_NAME,new_username);
                 resultIntent.putExtra(CONSTANTS.NEW_USER_STATUS,new_usersts);
                 setResult(Activity.RESULT_OK,resultIntent);

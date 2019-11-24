@@ -84,7 +84,7 @@ if(Login_attempt_count>=3)
     Toast.makeText(login.this,"Don't have account?Create One ",Toast.LENGTH_SHORT).show();
 
         if (!validate()) {
-            onLoginFailed();
+            onLoginFailed("can not validate (E8701)");
             return;
         }
 
@@ -113,7 +113,8 @@ if(Login_attempt_count>=3)
 
                         } else {
                             // If sign in fails, display a message to the user.
-                          onLoginFailed(); progressDialog.dismiss();
+                            ;
+                          onLoginFailed(task.getException().getLocalizedMessage()); progressDialog.dismiss();
                         }
 
                         // ...
@@ -145,8 +146,8 @@ onLoginSuccess();
         this.finish();
     }
 
-    public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+    public void onLoginFailed(String msg) {
+        Toast.makeText(getBaseContext(), "Login failed\n"+msg, Toast.LENGTH_LONG).show();
 
         _loginButton.setEnabled(true);
     }

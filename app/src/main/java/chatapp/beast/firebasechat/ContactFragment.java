@@ -98,7 +98,7 @@ public class ContactFragment extends Fragment {
                                     String chat_to_user_id = getRef(position).getKey();
                                     String chat_to_user_name = model.getUser_name();
                                     Intent chat_intent = new Intent(getContext(), ChatActivity.class);
-                                    chat_intent.putExtra("last_seen", dataSnapshot.child("online").getValue().toString());
+                                   chat_intent.putExtra("last_seen", dataSnapshot.child("online").getValue().toString());
                                     chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_ID, chat_to_user_id);
                                     chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_NAME, chat_to_user_name);
                                     chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_DP, model.getUser_thumb_image());

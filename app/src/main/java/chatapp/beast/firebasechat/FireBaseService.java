@@ -20,10 +20,10 @@ public class FireBaseService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        sendNotifications(remoteMessage.getNotification().getBody());
+        sendNotifications(remoteMessage.getNotification().getBody(),remoteMessage.getNotification().getTitle());
 
     }
-    private  void sendNotifications(String msg)
+    private  void sendNotifications(String msg,String title)
     {
         Intent intent=new Intent(this,MainActivity.class );
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -33,7 +33,7 @@ intent.putExtra("msg",msg);
         Uri notificationSound=RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(this);
         notificationBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
-        notificationBuilder.setContentTitle("FIREBASE TEST APP");
+        notificationBuilder.setContentTitle(title);
         notificationBuilder.setContentText(msg);
         notificationBuilder.setAutoCancel(true);
         notificationBuilder.setSound(notificationSound);

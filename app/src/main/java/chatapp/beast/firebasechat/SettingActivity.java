@@ -239,7 +239,7 @@ public class SettingActivity extends AppCompatActivity {
             CONSTANTS.DatabaseReferenceToCurrentUser.child("online").setValue(ServerValue.TIMESTAMP);
 
             FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+            Intent intent = new Intent(SettingActivity.this, SplashActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();

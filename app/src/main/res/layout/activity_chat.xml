@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/chat_bg"
+    android:background="@drawable/gradient"
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
 
@@ -31,8 +31,8 @@
         android:layout_marginStart="3dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="0dp"
-        android:background="@drawable/shape_message_area"
         android:gravity="bottom"
+        android:background="@drawable/shape_message_area"
         android:orientation="horizontal">
 
         <ImageButton
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:hint="Enter Your Message here"
-            android:textColor="@color/primaryTextColor"
+            android:textColor="@android:color/white"
             android:textColorHint="@color/primaryColor" />
 
         <ImageButton

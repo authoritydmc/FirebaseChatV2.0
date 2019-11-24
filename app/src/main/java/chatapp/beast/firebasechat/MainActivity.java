@@ -121,8 +121,7 @@ else goto_login_page();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("FireChat");
 
-      if (mAuth.getCurrentUser()!=null)
-          databaseReference.child("online").setValue("online");
+
 
 
     }
@@ -163,6 +162,7 @@ else goto_login_page();
     @Override
     protected void onResume() {
         super.onResume();
+        if (mAuth.getCurrentUser()!=null)
         databaseReference.child("online").setValue("online");
 
         registerInternetCheckReceiver();
