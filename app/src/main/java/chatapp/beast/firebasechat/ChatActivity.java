@@ -167,7 +167,7 @@ private  MediaPlayer senderplayer,receiverplayer;
 
      //   chat_to_user_name.setText(getIntent().getStringExtra(CONSTANTS.CHAT_TO_USER_NAME));
         rootref = FirebaseDatabase.getInstance().getReference();
-          messageAdapter=new ChatRecyclerAdapter(messagesList);
+          messageAdapter=new ChatRecyclerAdapter(messagesList,ChatActivity.this);
         msgrecyclerView=findViewById(R.id.Recycler_chat_msg);
 linearLayoutManager=new LinearLayoutManager(this);
 msgrecyclerView.setHasFixedSize(true);

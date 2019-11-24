@@ -1,5 +1,7 @@
 package chatapp.beast.firebasechat;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +22,8 @@ import static android.support.constraint.Constraints.TAG;
 
 public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Messages> Chats;
+
+    private Context mContext;
     private static final int TYPE_IMAGE=1;
 
     private static final int TYPE_TEXT=2;
@@ -49,7 +53,8 @@ return  new TextViewHolder(view);
 
     }
 
-    public ChatRecyclerAdapter(List<Messages> chats) {
+    public ChatRecyclerAdapter(List<Messages> chats,Context mContext) {
+     this.mContext=mContext;
         this.Chats=chats;
     }
 
@@ -58,7 +63,7 @@ return  new TextViewHolder(view);
         Messages obj=Chats.get(i);
         Log.d("RAAJ", "onBindViewHolder: "+obj.getType()+viewHolder.getItemViewType());
         if (obj.getType().equals("image"))
-        {//try {
+        {try{
             if (obj.getFromid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
 
                 ( (PictureViewHolder)viewHolder).picroot.setGravity(Gravity.RIGHT);
@@ -68,10 +73,14 @@ return  new TextViewHolder(view);
 
             }
             Picasso.get().load(obj.getMessage()).placeholder(R.drawable.logo).into(((PictureViewHolder)viewHolder).imgView);
-
-       // }catch (Exception e)
+            ( (PictureViewHolder)viewHolder).picroot.setOnClickListener(v->{
+                Intent intent=new Intent(mContext,ViewFullPicture.class);
+                intent.putExtra("imageurl",obj.getMessage());
+                mContext.startActivity(intent);
+            });
+        }catch (Exception e)
         {
-          //      Log.d(TAG, "onBindViewHolder: "+e.getMessage());
+              Log.d(TAG, "onBindViewHolder: "+e.getMessage());
         }
 
 

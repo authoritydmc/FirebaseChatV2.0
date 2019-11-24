@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/message_picfull_root"
+    android:layout_marginTop="10dp"
+
+    android:background="@drawable/gradient"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_weight="8"
+        android:scrollbars="horizontal"
+        android:scrollIndicators="right"
+        android:id="@+id/chat_message_pic_full"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="close"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:id="@+id/view_full_pic_closebtn"/>
+
+</LinearLayout>
