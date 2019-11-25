@@ -3,13 +3,33 @@ package chatapp.beast.firebasechat;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.firebase.database.ServerValue;
+
+import java.security.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 public class LastSeen extends Application {
 
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
+    public static String getTimeStamp(long time)
+    {
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm a dd-mm-yy");
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, convert to millis
+            time *= 1000;
+        }
+        return dateFormat.format(new Date(time)).toString();
 
+
+    }
 
     public static String getTimeAgo(long time) {
         if (time < 1000000000000L) {

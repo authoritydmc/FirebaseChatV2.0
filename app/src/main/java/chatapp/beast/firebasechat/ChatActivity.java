@@ -125,7 +125,7 @@ private  MediaPlayer senderplayer,receiverplayer;
                         filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                SendPicture(uri.toString());
+                                SendMessage(uri.toString(),"image");
                             }
                         });
 
@@ -239,10 +239,17 @@ chat_to_user_name.setText(receivername);
             public void onClick(View v) {
                 FirebaseDatabase.getInstance().getReference().child("CurrentCHAT").child(Sender_user_id).child(Receiver_user_id).child("ischatting").setValue(Receiver_user_id);
                 FirebaseDatabase.getInstance().getReference().child("CurrentCHAT").child(Receiver_user_id).child(Sender_user_id).child("ischatting").setValue(Sender_user_id);
-                SendMessage();
-        AudioManager        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-                audioManager.playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
+                String inputmsg = msg_edittext.getText().toString();
+                msg_edittext.setText(null);
+
+                if (inputmsg.isEmpty())
+                    msg_edittext.setError("input msg first");
+                else
+                {
+                    SendMessage(inputmsg,"text");
+                }
+
 
             }
         });
@@ -303,48 +310,13 @@ chat_to_user_name.setText(receivername);
             }
         });
     }
-private  void SendPicture(String imgurl)
-{
-    String senderref = CONSTANTS.MESSAGE_NODE + "/" + Sender_user_id + "/" + Receiver_user_id;
-    String receiverref = CONSTANTS.MESSAGE_NODE + "/" + Receiver_user_id + "/" + Sender_user_id;
-
-    Log.i("PICTUREURL", "SendPicture: "+imgurl);
-    DatabaseReference user_msg_key = rootref.child(CONSTANTS.MESSAGE_NODE).child(Sender_user_id)
-            .child(Receiver_user_id).push();
-    String push_id = user_msg_key.getKey();
-    Map messageTextBody = new HashMap();
-    messageTextBody.put("message", imgurl);
-    messageTextBody.put("seen", false);
-    messageTextBody.put("time", ServerValue.TIMESTAMP);
-    messageTextBody.put("type", "image");
-    messageTextBody.put("fromid",Sender_user_id);
-
-    Map messageBodyDetails = new HashMap();
-
-    messageBodyDetails.put(senderref + "/" + push_id,messageTextBody);
-    messageBodyDetails.put(receiverref + "/" + push_id, messageTextBody);
 
 
 
-    rootref.updateChildren(messageBodyDetails, new DatabaseReference.CompletionListener() {
-        @Override
-        public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-            Toast.makeText(context, "Picture Send Complete", Toast.LENGTH_SHORT).show();
-            issendtype=true;
-            senderplayer.start();
-        }
-    });
-
-}
-    private void SendMessage() {
-        String inputmsg = msg_edittext.getText().toString();
-        msg_edittext.setText(null);
-
-        if (inputmsg.isEmpty())
-            msg_edittext.setError("input msg first");
+    private void SendMessage(String msg,String type) {
 
 
-        else {
+
             String senderref = CONSTANTS.MESSAGE_NODE + "/" + Sender_user_id + "/" + Receiver_user_id;
             String receiverref = CONSTANTS.MESSAGE_NODE + "/" + Receiver_user_id + "/" + Sender_user_id;
 
@@ -354,11 +326,12 @@ private  void SendPicture(String imgurl)
                     .child(Receiver_user_id).push();
             String push_id = user_msg_key.getKey();
             Map messageTextBody = new HashMap();
-            messageTextBody.put("message", inputmsg);
+            messageTextBody.put("message", msg);
             messageTextBody.put("seen", false);
             messageTextBody.put("time", ServerValue.TIMESTAMP);
-            messageTextBody.put("type", "text");
+            messageTextBody.put("type", type);
             messageTextBody.put("fromid",Sender_user_id);
+
 
             Map messageBodyDetails = new HashMap();
 
@@ -377,7 +350,7 @@ senderplayer.start();
             });
 
 
-        }
+
     }
 
 

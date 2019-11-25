@@ -3,6 +3,7 @@ package chatapp.beast.firebasechat;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -78,6 +79,8 @@ return  new TextViewHolder(view);
                 intent.putExtra("imageurl",obj.getMessage());
                 mContext.startActivity(intent);
             });
+            ( (PictureViewHolder)viewHolder).datetime.setText(LastSeen.getTimeStamp(obj.getTime()));
+
         }catch (Exception e)
         {
               Log.d(TAG, "onBindViewHolder: "+e.getMessage());
@@ -94,6 +97,8 @@ return  new TextViewHolder(view);
             else ( (ChatRecyclerAdapter.TextViewHolder)viewHolder).msgrootLayout.setGravity(Gravity.LEFT);
 
             ( (ChatRecyclerAdapter.TextViewHolder)viewHolder).messageText.setText(obj.getMessage());
+            ( (TextViewHolder)viewHolder).datetime.setText(LastSeen.getTimeStamp(obj.getTime()));
+
         }
 
 
@@ -108,21 +113,26 @@ return  new TextViewHolder(view);
     private static class TextViewHolder extends  RecyclerView.ViewHolder{
         private TextView messageText;
         private LinearLayout msgrootLayout;
+        private TextView datetime;
+
         public TextViewHolder(@NonNull View itemView) {
             super(itemView);
             messageText=itemView.findViewById(R.id.message_text);
             msgrootLayout=itemView.findViewById(R.id.message_buuble_root);
+            datetime=itemView.findViewById(R.id.chat_message_dateTime);
 
         }
     }
     private static  class PictureViewHolder extends  RecyclerView.ViewHolder{
-        public ImageView imgView;
-        public  LinearLayout picroot;
+        private ImageView imgView;
+        private LinearLayout picroot;
+        private TextView datetime;
         public PictureViewHolder(@NonNull View itemView) {
             super(itemView);
             imgView=itemView.findViewById(R.id.chat_message_pic);
 
-            picroot=itemView.findViewById(R.id.message_pic_root);
+            picroot=itemView.findViewById(R.id.chat_message_pic_root);
+            datetime=itemView.findViewById(R.id.chat_pic_dateTime);
         }
     }
 }
