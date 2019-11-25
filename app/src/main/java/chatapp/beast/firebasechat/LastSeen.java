@@ -12,6 +12,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 public class LastSeen extends Application {
 
@@ -21,12 +22,29 @@ public class LastSeen extends Application {
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
     public static String getTimeStamp(long time)
     {
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm a dd-mm-yy");
+        long now = System.currentTimeMillis();
+        DateFormat dateFormat=null;
         if (time < 1000000000000L) {
             // if timestamp given in seconds, convert to millis
             time *= 1000;
         }
-        return dateFormat.format(new Date(time)).toString();
+        if (time > now || time <= 0) {
+            return "Futuristic Void";
+        }
+        final long diff = now - time;
+if (diff<DAY_MILLIS)
+{
+    dateFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+
+}else if (diff<DAY_MILLIS*365)
+{
+    //month
+    dateFormat = new SimpleDateFormat("hh:mm a dd MMM ", Locale.getDefault());
+
+}else {
+    dateFormat = new SimpleDateFormat("hh:mm a dd-MMM-yy", Locale.getDefault());
+
+}      return dateFormat.format(new Date(time)).toString();
 
 
     }
