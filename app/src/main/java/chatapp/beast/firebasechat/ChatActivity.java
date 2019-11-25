@@ -254,6 +254,9 @@ chat_to_user_name.setText(receivername);
             }
         });
         btn_send_pic.setOnClickListener(v->{
+            FirebaseDatabase.getInstance().getReference().child("CurrentCHAT").child(Sender_user_id).child(Receiver_user_id).child("ischatting").setValue(Receiver_user_id);
+            FirebaseDatabase.getInstance().getReference().child("CurrentCHAT").child(Receiver_user_id).child(Sender_user_id).child("ischatting").setValue(Sender_user_id);
+
             Intent galleryintent = new Intent();
             galleryintent.setAction(Intent.ACTION_GET_CONTENT);
             galleryintent.setType("image/*");
@@ -278,12 +281,7 @@ chat_to_user_name.setText(receivername);
                 }
                 else
                     issendtype=false;
-//               Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
-//                }else {
-//                    vibrator.vibrate(200);
-//                }
+
                 messageAdapter.notifyDataSetChanged();
 
             msgrecyclerView.scrollToPosition(messageAdapter.getItemCount()-1);

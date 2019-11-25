@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private Context mContext;
     private static final int TYPE_IMAGE=1;
-
+    private static FirebaseUser user;
     private static final int TYPE_TEXT=2;
 
     @Override
@@ -57,6 +58,8 @@ return  new TextViewHolder(view);
     public ChatRecyclerAdapter(List<Messages> chats,Context mContext) {
      this.mContext=mContext;
         this.Chats=chats;
+        user=FirebaseAuth.getInstance().getCurrentUser();
+
     }
 
     @Override
@@ -65,7 +68,7 @@ return  new TextViewHolder(view);
         Log.d("RAAJ", "onBindViewHolder: "+obj.getType()+viewHolder.getItemViewType());
         if (obj.getType().equals("image"))
         {try{
-            if (obj.getFromid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            if (obj.getFromid().equals(user.getUid())) {
 
                 ( (PictureViewHolder)viewHolder).picroot.setGravity(Gravity.RIGHT);
             }
@@ -90,7 +93,7 @@ return  new TextViewHolder(view);
         }    else
         {
 
-            if (obj.getFromid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            if (obj.getFromid().equals(user.getUid())) {
 
                 ( (ChatRecyclerAdapter.TextViewHolder)viewHolder).msgrootLayout.setGravity(Gravity.RIGHT);
             }
