@@ -40,7 +40,8 @@
         android:textAlignment="center"
         android:text="USERNAME"
        
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:gravity="center_horizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,7 +61,8 @@ android:gravity="center"
         android:text="TextView"
         android:textAlignment="center"
 
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:gravity="center_horizontal" />
         <ImageButton
             android:id="@+id/edit_status_btn"
             android:layout_width="wrap_content"
