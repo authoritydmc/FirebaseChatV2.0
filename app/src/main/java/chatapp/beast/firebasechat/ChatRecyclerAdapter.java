@@ -1,8 +1,10 @@
 package chatapp.beast.firebasechat;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -84,6 +88,42 @@ return  new TextViewHolder(view);
             });
             ( (PictureViewHolder)viewHolder).datetime.setText(LastSeen.getTimeStamp(obj.getTime()));
 
+
+
+
+
+
+
+
+            ( (PictureViewHolder)viewHolder).picroot.setOnLongClickListener(v -> {
+
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Delete This message")
+                        .setMessage("Are you sure you want to delete this entry?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                DatabaseReference root= FirebaseDatabase.getInstance().getReference().child(CONSTANTS.MESSAGE_NODE);
+                                root.child(obj.getFromid()).child(obj.getToid()).child(obj.getMessageID()).removeValue();
+                                root.child(obj.getToid()).child(obj.getFromid()).child(obj.getMessageID()).removeValue();
+
+
+
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+                return true;
+            });
+
+
+
         }catch (Exception e)
         {
               Log.d(TAG, "onBindViewHolder: "+e.getMessage());
@@ -92,7 +132,7 @@ return  new TextViewHolder(view);
 
         }    else
         {
-
+ //text
             if (obj.getFromid().equals(user.getUid())) {
 
                 ( (ChatRecyclerAdapter.TextViewHolder)viewHolder).msgrootLayout.setGravity(Gravity.RIGHT);
@@ -101,6 +141,35 @@ return  new TextViewHolder(view);
 
             ( (ChatRecyclerAdapter.TextViewHolder)viewHolder).messageText.setText(obj.getMessage());
             ( (TextViewHolder)viewHolder).datetime.setText(LastSeen.getTimeStamp(obj.getTime()));
+
+            ( (TextViewHolder)viewHolder).msgrootLayout.setOnLongClickListener(v -> {
+
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Delete This message")
+                        .setMessage("Are you sure you want to delete this entry?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                               DatabaseReference root= FirebaseDatabase.getInstance().getReference().child(CONSTANTS.MESSAGE_NODE);
+                               root.child(obj.getFromid()).child(obj.getToid()).child(obj.getMessageID()).removeValue();
+                               root.child(obj.getToid()).child(obj.getFromid()).child(obj.getMessageID()).removeValue();
+
+
+
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+return true;
+            });
+
+
 
         }
 

@@ -97,12 +97,12 @@ public class ChatFragment extends Fragment {
                                  @Override
                                  public void onClick(View v) {
                                      String chat_to_user_id = user_id;
-                                     String chat_to_user_name = dataSnapshot.child(CONSTANTS.DATABASE_USER_name).getValue().toString();
+                                     //String chat_to_user_name = dataSnapshot.child(CONSTANTS.DATABASE_USER_name).getValue().toString();
                                      Intent chat_intent = new Intent(getContext(), ChatActivity.class);
-                                     chat_intent.putExtra("last_seen", dataSnapshot.child("online").getValue().toString());
+                                  //   chat_intent.putExtra("last_seen", dataSnapshot.child("online").getValue().toString());
                                      chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_ID, chat_to_user_id);
-                                     chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_NAME, chat_to_user_name);
-                                     chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_DP, dataSnapshot.child(CONSTANTS.DATABASE_USER_thumb_image).getValue().toString());
+                                    // chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_NAME, chat_to_user_name);
+                                    // chat_intent.putExtra(CONSTANTS.CHAT_TO_USER_DP, dataSnapshot.child(CONSTANTS.DATABASE_USER_thumb_image).getValue().toString());
                                      startActivity(chat_intent);
 
 

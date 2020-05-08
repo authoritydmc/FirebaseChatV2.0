@@ -13,7 +13,7 @@
         android:layout_toEndOf="@+id/chat_activity_profile_pic"
         android:background="@android:color/transparent"
         android:foregroundGravity="center_horizontal"
-        android:src="@drawable/ic_back" />
+        android:src="@drawable/ic_arrow_back_whhte24dp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chat_activity_profile_pic"

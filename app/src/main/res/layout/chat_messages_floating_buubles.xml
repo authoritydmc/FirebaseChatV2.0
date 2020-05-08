@@ -23,7 +23,7 @@
         android:textIsSelectable="true"
         android:linksClickable="true"
         android:hapticFeedbackEnabled="true"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="#FFF"
         android:hint="Enter Your Message Here"
         android:layout_marginLeft="4dp" />
         <TextView
@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:text="Date time "
             android:textSize="10dp"
+            android:textColor="#B0BEC5"
             android:layout_marginRight="10dp"
             android:layout_gravity="end"
             android:id="@+id/chat_message_dateTime"/>

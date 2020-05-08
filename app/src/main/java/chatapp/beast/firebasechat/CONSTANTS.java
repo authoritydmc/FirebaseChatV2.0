@@ -16,9 +16,12 @@ public class CONSTANTS {
     public static String CHAT_TO_USER_DP = "chat_to_user_dp";
     public static String DATABASE_USER_nodE = "Users";
     public static String DATABASE_USER_image = "user_image";
+    public static String DATABASE_USER_online="online";
     public static String DATABASE_USER_thumb_image = "user_thumb_image";
     public static String DATABASE_USER_name = "user_name";
     public static String DATABASE_USER_status = "user_status";
+    public static String DATABASE_USER_msg = "message";
+
     public static String DEVICE_TOKEN = "device_token";
     public static String MESSAGE_NODE = "Messages";
     public  static DatabaseReference DatabaseReferenceToCurrentUser=    FirebaseDatabase.getInstance().getReference().child(CONSTANTS.DATABASE_USER_nodE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());

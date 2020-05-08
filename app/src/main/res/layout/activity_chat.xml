@@ -16,7 +16,8 @@
         android:layout_height="match_parent"
         android:id="@+id/Recycler_chat_msg"
         android:layout_below="@id/chat_bar"
-        android:layout_above="@id/chat_combo">
+        android:layout_above="@id/chat_combo"
+        android:layout_marginBottom="10dp">
 
 
     </android.support.v7.widget.RecyclerView>
@@ -28,9 +29,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="0dp"
+android:layout_marginBottom="2dp"
         android:gravity="bottom"
         android:background="@drawable/shape_message_area"
         android:orientation="horizontal">
@@ -40,13 +39,15 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_select_photo" />
+            android:src="@drawable/ic_camera_black_24dp" />
 
         <EditText
             android:id="@+id/chat_activity_message_edit_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="20"
             android:hint="Enter Your Message here"
             android:textColor="@android:color/white"
             android:textColorHint="@color/primaryColor" />
@@ -56,7 +57,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_send_message" />
+            android:src="@drawable/ic_send_black_24dp" />
 
     </LinearLayout>
 

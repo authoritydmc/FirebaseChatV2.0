@@ -37,7 +37,8 @@
         <activity
             android:name=".login"
             android:theme="@style/AppTheme.Dark" />
-        <activity android:name=".SettingActivity" />
+        <activity android:name=".SettingActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".Change_profile" />
         <activity android:name=".ProfileActivity" />
         <activity

@@ -29,7 +29,7 @@ public class LastSeen extends Application {
             time *= 1000;
         }
         if (time > now || time <= 0) {
-            return "Futuristic Void";
+            return "now";
         }
         final long diff = now - time;
 if (diff<DAY_MILLIS)
@@ -57,7 +57,7 @@ if (diff<DAY_MILLIS)
 
         long now = System.currentTimeMillis();
         if (time > now || time <= 0) {
-            return null;
+            return "active now";
         }
 
         // TODO: localize
