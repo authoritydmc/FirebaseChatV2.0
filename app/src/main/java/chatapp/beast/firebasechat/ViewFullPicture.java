@@ -1,11 +1,11 @@
 package chatapp.beast.firebasechat;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 public class ViewFullPicture extends AppCompatActivity {
 ImageView img;
@@ -20,6 +20,8 @@ Button btnclose;
             finish();
         });
         String urlImg=getIntent().getStringExtra("imageurl");
-        Picasso.get().load(urlImg).placeholder(R.drawable.bg).into(img);
+//        Picasso.get().setLoggingEnabled(true);
+//        Picasso.get().load(urlImg).placeholder(R.drawable.bg).into(img);
+        Glide.with(this).load(urlImg).placeholder(R.drawable.bg).into(img);
     }
 }
