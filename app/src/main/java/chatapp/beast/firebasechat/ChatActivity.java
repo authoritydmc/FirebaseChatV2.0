@@ -98,13 +98,20 @@ public class ChatActivity extends AppCompatActivity {
                     r.printStackTrace();
                 }*/
             Toast.makeText(ChatActivity.this, "Sending Picture", Toast.LENGTH_SHORT).show();
+            /**
+             * showing temp image uploading ....
+             *
+             *
+             */
+
+
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             img.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
             final byte[] thumbByte = byteArrayOutputStream.toByteArray();
 
             final String FileUrl = FirebaseAuth.getInstance().getCurrentUser().getUid() + System.nanoTime() + ".jpg";
 
-            final StorageReference filepath = FirebaseStorage.getInstance().getReference().child("media");
+            final StorageReference filepath = FirebaseStorage.getInstance().getReference().child("media").child(FileUrl);
             filepath.putBytes(thumbByte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 public class ViewFullPicture extends AppCompatActivity {
 ImageView img;
@@ -20,8 +20,8 @@ Button btnclose;
             finish();
         });
         String urlImg=getIntent().getStringExtra("imageurl");
-//        Picasso.get().setLoggingEnabled(true);
-//        Picasso.get().load(urlImg).placeholder(R.drawable.bg).into(img);
-        Glide.with(this).load(urlImg).placeholder(R.drawable.bg).into(img);
+        Picasso.get().setLoggingEnabled(true);
+        Picasso.get().load(urlImg).placeholder(R.drawable.bg).into(img);
+//        Glide.with(this).load(urlImg).placeholder(R.drawable.bg).into(img);
     }
 }

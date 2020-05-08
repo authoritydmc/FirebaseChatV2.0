@@ -28,7 +28,7 @@ public class MyChat_Offline extends Application {
         Picasso.Builder builder = new Picasso.Builder(this);
         builder.downloader(new OkHttp3Downloader(client)).build();
         Picasso built = builder.build();
-        built.setIndicatorsEnabled(true);
+        built.setIndicatorsEnabled(false);
         built.setLoggingEnabled(true);
         Picasso.setSingletonInstance(built);
     }
