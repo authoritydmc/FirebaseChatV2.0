@@ -284,13 +284,6 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 Toast.makeText(ChatActivity.this, "Message Deleted ", Toast.LENGTH_SHORT).show();
-//                messagesList.clear();
-//                FetchMessage();
-//                messagesList.remove(messagesList.size()-1);
-//                messageAdapter.notifyDataSetChanged();
-
-                msgrecyclerView.scrollToPosition(messageAdapter.getItemCount() - 1);
-
             }
 
             @Override

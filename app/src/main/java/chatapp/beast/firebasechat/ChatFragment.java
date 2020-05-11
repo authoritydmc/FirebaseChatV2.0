@@ -79,7 +79,7 @@ public class ChatFragment extends Fragment {
                              try {
                                  String username = dataSnapshot.child(CONSTANTS.DATABASE_USER_name).getValue().toString();
                                  holder.setUser_name(username);
-                                 holder.setUser_image(dataSnapshot.child(CONSTANTS.DATABASE_USER_image).getValue().toString());
+                                 holder.setUser_image(dataSnapshot.child(CONSTANTS.DATABASE_USER_thumb_image).getValue().toString());
                                  holder.setUser_status(dataSnapshot.child(CONSTANTS.DATABASE_USER_status).getValue().toString());
                              }catch (Exception e)
                              {  holder.mView.findViewById(R.id.contacts_fragment_card_view).setVisibility(View.GONE);

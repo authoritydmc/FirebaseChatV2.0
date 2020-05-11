@@ -30,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import authoritydmc.UpdateApp;
+
 
 public class MainActivity extends AppCompatActivity {
     public static boolean isAppRunning;
@@ -111,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
 else goto_login_page();
 
         setContentView(R.layout.activity_main);
+
+        //Check for update
+        UpdateApp.checkupdate(this,BuildConfig.VERSION_NAME,true);
+//
+
         viewPager = findViewById(R.id.main_tabs_pager);
         tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(tabPagerAdapter);

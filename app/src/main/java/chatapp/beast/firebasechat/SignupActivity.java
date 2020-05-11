@@ -95,7 +95,7 @@ public class SignupActivity extends AppCompatActivity {
                                     Snackbar.make(getWindow().getDecorView().getRootView(), "device token uploaded", Snackbar.LENGTH_SHORT).show();
                                 }
                             });
-                            myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_image).setValue("https://firebasestorage.googleapis.com/v0/b/fir-1af64.appspot.com/o/profile_images%20%2Fdefault_profile_pic.png?alt=media&token=95159071-a9f2-4f3f-8121-00f8dd0c5733");
+                            myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_image).setValue("default_image");
                             myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_thumb_image).setValue("default_image");
                             myFirebaseDatareference.child(CONSTANTS.DATABASE_USER_status).setValue("I am using Raj's FireChat!!!").addOnCompleteListener(new OnCompleteListener<Void>() {
                                @Override
