@@ -88,6 +88,7 @@ public class ChatActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            assert Imageuri != null;
             File thumb_filepathURi = new File(Imageuri.getPath());
               /*  try
                 {
@@ -98,33 +99,23 @@ public class ChatActivity extends AppCompatActivity {
                     r.printStackTrace();
                 }*/
             Toast.makeText(ChatActivity.this, "Sending Picture", Toast.LENGTH_SHORT).show();
-            /**
-             * showing temp image uploading ....
-             *
-             *
-             */
 
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            assert img != null;
             img.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
             final byte[] thumbByte = byteArrayOutputStream.toByteArray();
 
             final String FileUrl = FirebaseAuth.getInstance().getCurrentUser().getUid() + System.nanoTime() + ".jpg";
 
             final StorageReference filepath = FirebaseStorage.getInstance().getReference().child("media").child(FileUrl);
-            filepath.putBytes(thumbByte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            filepath.putBytes(thumbByte).addOnSuccessListener(taskSnapshot -> filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
+                public void onSuccess(Uri uri) {
 
-                            SendMessage(uri.toString(), "image");
-                        }
-                    });
-
+                    SendMessage(uri.toString(), "image");
                 }
-            });
+            }));
 
 
         }
@@ -278,7 +269,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
 
-                if (issendtype==false)
+                if (!issendtype)
                 {senderplayer.stop();
                     receiverplayer.start();
 
@@ -295,8 +286,8 @@ public class ChatActivity extends AppCompatActivity {
                 Toast.makeText(ChatActivity.this, "Message Deleted ", Toast.LENGTH_SHORT).show();
 //                messagesList.clear();
 //                FetchMessage();
-                messagesList.remove(messagesList.size()-1);
-                messageAdapter.notifyDataSetChanged();
+//                messagesList.remove(messagesList.size()-1);
+//                messageAdapter.notifyDataSetChanged();
 
                 msgrecyclerView.scrollToPosition(messageAdapter.getItemCount() - 1);
 

@@ -58,7 +58,7 @@ return  new TextViewHolder(view);
 
     }
 
-    public ChatRecyclerAdapter(List<Messages> chats,Context mContext) {
+    ChatRecyclerAdapter(List<Messages> chats, Context mContext) {
      this.mContext=mContext;
         this.Chats=chats;
         user=FirebaseAuth.getInstance().getCurrentUser();
@@ -73,10 +73,10 @@ return  new TextViewHolder(view);
         {try{
             if (obj.getFromid().equals(user.getUid())) {
 
-                ( (PictureViewHolder)viewHolder).picroot.setGravity(Gravity.RIGHT);
+                ( (PictureViewHolder)viewHolder).picroot.setGravity(Gravity.END);
             }
             else
-            {                ( (PictureViewHolder)viewHolder).picroot.setGravity(Gravity.LEFT);
+            {                ( (PictureViewHolder)viewHolder).picroot.setGravity(Gravity.START);
 
             }
             Picasso.get().load(obj.getMessage()).placeholder(R.drawable.logo).into(((PictureViewHolder)viewHolder).imgView);
@@ -98,19 +98,19 @@ return  new TextViewHolder(view);
 
                 new AlertDialog.Builder(mContext)
                         .setTitle("Delete This message")
-                        .setMessage("Are you sure you want to delete this entry?")
+                        .setMessage("Are you sure you want to delete this Message?")
 
                         // Specifying a listener allows you to take an action before dismissing the dialog.
                         // The dialog is automatically dismissed when a dialog button is clicked.
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                DatabaseReference root= FirebaseDatabase.getInstance().getReference().child(CONSTANTS.MESSAGE_NODE);
-                                root.child(obj.getFromid()).child(obj.getToid()).child(obj.getMessageID()).removeValue();
-                                root.child(obj.getToid()).child(obj.getFromid()).child(obj.getMessageID()).removeValue();
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                            DatabaseReference root= FirebaseDatabase.getInstance().getReference().child(CONSTANTS.MESSAGE_NODE);
+                            root.child(obj.getFromid()).child(obj.getToid()).child(obj.getMessageID()).removeValue();
+                            root.child(obj.getToid()).child(obj.getFromid()).child(obj.getMessageID()).removeValue();
 
 
-
-                            }
+                                    //Delete the msg
+                            Chats.remove(i);
+                            notifyDataSetChanged();
                         })
 
                         // A null listener allows the button to dismiss the dialog and take no further action.
@@ -134,9 +134,9 @@ return  new TextViewHolder(view);
  //text
             if (obj.getFromid().equals(user.getUid())) {
 
-                ( (ChatRecyclerAdapter.TextViewHolder)viewHolder).msgrootLayout.setGravity(Gravity.RIGHT);
+                ( (ChatRecyclerAdapter.TextViewHolder)viewHolder).msgrootLayout.setGravity(Gravity.END);
             }
-            else ( (ChatRecyclerAdapter.TextViewHolder)viewHolder).msgrootLayout.setGravity(Gravity.LEFT);
+            else ( (ChatRecyclerAdapter.TextViewHolder)viewHolder).msgrootLayout.setGravity(Gravity.START);
 
             ( (ChatRecyclerAdapter.TextViewHolder)viewHolder).messageText.setText(obj.getMessage());
             ( (TextViewHolder)viewHolder).datetime.setText(LastSeen.getTimeStamp(obj.getTime()));
@@ -145,19 +145,19 @@ return  new TextViewHolder(view);
 
                 new AlertDialog.Builder(mContext)
                         .setTitle("Delete This message")
-                        .setMessage("Are you sure you want to delete this entry?")
+                        .setMessage("Are you sure you want to delete this Message?")
 
                         // Specifying a listener allows you to take an action before dismissing the dialog.
                         // The dialog is automatically dismissed when a dialog button is clicked.
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                               DatabaseReference root= FirebaseDatabase.getInstance().getReference().child(CONSTANTS.MESSAGE_NODE);
-                               root.child(obj.getFromid()).child(obj.getToid()).child(obj.getMessageID()).removeValue();
-                               root.child(obj.getToid()).child(obj.getFromid()).child(obj.getMessageID()).removeValue();
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                           DatabaseReference root= FirebaseDatabase.getInstance().getReference().child(CONSTANTS.MESSAGE_NODE);
+                           root.child(obj.getFromid()).child(obj.getToid()).child(obj.getMessageID()).removeValue();
+                           root.child(obj.getToid()).child(obj.getFromid()).child(obj.getMessageID()).removeValue();
+                          //Remove The Data...
+                            Chats.remove(i);
+                            notifyDataSetChanged();
 
 
-
-                            }
                         })
 
                         // A null listener allows the button to dismiss the dialog and take no further action.
@@ -186,7 +186,7 @@ return true;
         private LinearLayout msgrootLayout;
         private TextView datetime;
 
-        public TextViewHolder(@NonNull View itemView) {
+        TextViewHolder(@NonNull View itemView) {
             super(itemView);
             messageText=itemView.findViewById(R.id.message_text);
             msgrootLayout=itemView.findViewById(R.id.message_buuble_root);
@@ -198,7 +198,7 @@ return true;
         private ImageView imgView;
         private LinearLayout picroot;
         private TextView datetime;
-        public PictureViewHolder(@NonNull View itemView) {
+        PictureViewHolder(@NonNull View itemView) {
             super(itemView);
             imgView=itemView.findViewById(R.id.chat_message_pic);
 
